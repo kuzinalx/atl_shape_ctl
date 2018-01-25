@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Jan 25 11:20:14 2018
+/* at Thu Jan 25 17:57:53 2018
  */
 /* Compiler settings for shape_ctl_2.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -66,6 +66,13 @@ typedef interface IShapeCircle IShapeCircle;
 #endif 	/* __IShapeCircle_FWD_DEFINED__ */
 
 
+#ifndef __IShapeTriangle_FWD_DEFINED__
+#define __IShapeTriangle_FWD_DEFINED__
+typedef interface IShapeTriangle IShapeTriangle;
+
+#endif 	/* __IShapeTriangle_FWD_DEFINED__ */
+
+
 #ifndef __ShapeSquare_FWD_DEFINED__
 #define __ShapeSquare_FWD_DEFINED__
 
@@ -88,6 +95,18 @@ typedef struct ShapeCircle ShapeCircle;
 #endif /* __cplusplus */
 
 #endif 	/* __ShapeCircle_FWD_DEFINED__ */
+
+
+#ifndef __ShapeTriangle_FWD_DEFINED__
+#define __ShapeTriangle_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class ShapeTriangle ShapeTriangle;
+#else
+typedef struct ShapeTriangle ShapeTriangle;
+#endif /* __cplusplus */
+
+#endif 	/* __ShapeTriangle_FWD_DEFINED__ */
 
 
 /* header files for imported files */
@@ -684,6 +703,210 @@ EXTERN_C const IID IID_IShapeCircle;
 #endif 	/* __IShapeCircle_INTERFACE_DEFINED__ */
 
 
+#ifndef __IShapeTriangle_INTERFACE_DEFINED__
+#define __IShapeTriangle_INTERFACE_DEFINED__
+
+/* interface IShapeTriangle */
+/* [unique][nonextensible][dual][uuid][object] */ 
+
+
+EXTERN_C const IID IID_IShapeTriangle;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("70044D22-A4C8-4B98-AE07-FED6E9E4C617")
+    IShapeTriangle : public IShape
+    {
+    public:
+        virtual /* [id][propget] */ HRESULT STDMETHODCALLTYPE get_Vertex_X( 
+            /* [in] */ USHORT nVertex,
+            /* [retval][out] */ LONG *pVal) = 0;
+        
+        virtual /* [id][propput] */ HRESULT STDMETHODCALLTYPE put_Vertex_X( 
+            /* [in] */ USHORT nVertex,
+            /* [in] */ LONG newVal) = 0;
+        
+        virtual /* [id][propget] */ HRESULT STDMETHODCALLTYPE get_Vertex_Y( 
+            /* [in] */ USHORT nVertex,
+            /* [retval][out] */ LONG *pVal) = 0;
+        
+        virtual /* [id][propput] */ HRESULT STDMETHODCALLTYPE put_Vertex_Y( 
+            /* [in] */ USHORT nVertex,
+            /* [in] */ LONG newVal) = 0;
+        
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IShapeTriangleVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IShapeTriangle * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IShapeTriangle * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IShapeTriangle * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
+            IShapeTriangle * This,
+            /* [out] */ UINT *pctinfo);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
+            IShapeTriangle * This,
+            /* [in] */ UINT iTInfo,
+            /* [in] */ LCID lcid,
+            /* [out] */ ITypeInfo **ppTInfo);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
+            IShapeTriangle * This,
+            /* [in] */ REFIID riid,
+            /* [size_is][in] */ LPOLESTR *rgszNames,
+            /* [range][in] */ UINT cNames,
+            /* [in] */ LCID lcid,
+            /* [size_is][out] */ DISPID *rgDispId);
+        
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
+            IShapeTriangle * This,
+            /* [annotation][in] */ 
+            _In_  DISPID dispIdMember,
+            /* [annotation][in] */ 
+            _In_  REFIID riid,
+            /* [annotation][in] */ 
+            _In_  LCID lcid,
+            /* [annotation][in] */ 
+            _In_  WORD wFlags,
+            /* [annotation][out][in] */ 
+            _In_  DISPPARAMS *pDispParams,
+            /* [annotation][out] */ 
+            _Out_opt_  VARIANT *pVarResult,
+            /* [annotation][out] */ 
+            _Out_opt_  EXCEPINFO *pExcepInfo,
+            /* [annotation][out] */ 
+            _Out_opt_  UINT *puArgErr);
+        
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *GetBoundingBox )( 
+            IShapeTriangle * This,
+            /* [out] */ LONG *prect);
+        
+        /* [id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_LineColor )( 
+            IShapeTriangle * This,
+            /* [retval][out] */ OLE_COLOR *pVal);
+        
+        /* [id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_LineColor )( 
+            IShapeTriangle * This,
+            /* [in] */ OLE_COLOR newVal);
+        
+        /* [id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_FillColor )( 
+            IShapeTriangle * This,
+            /* [retval][out] */ OLE_COLOR *pVal);
+        
+        /* [id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_FillColor )( 
+            IShapeTriangle * This,
+            /* [in] */ OLE_COLOR newVal);
+        
+        /* [id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Vertex_X )( 
+            IShapeTriangle * This,
+            /* [in] */ USHORT nVertex,
+            /* [retval][out] */ LONG *pVal);
+        
+        /* [id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Vertex_X )( 
+            IShapeTriangle * This,
+            /* [in] */ USHORT nVertex,
+            /* [in] */ LONG newVal);
+        
+        /* [id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Vertex_Y )( 
+            IShapeTriangle * This,
+            /* [in] */ USHORT nVertex,
+            /* [retval][out] */ LONG *pVal);
+        
+        /* [id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Vertex_Y )( 
+            IShapeTriangle * This,
+            /* [in] */ USHORT nVertex,
+            /* [in] */ LONG newVal);
+        
+        END_INTERFACE
+    } IShapeTriangleVtbl;
+
+    interface IShapeTriangle
+    {
+        CONST_VTBL struct IShapeTriangleVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IShapeTriangle_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IShapeTriangle_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IShapeTriangle_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IShapeTriangle_GetTypeInfoCount(This,pctinfo)	\
+    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
+
+#define IShapeTriangle_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
+    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
+
+#define IShapeTriangle_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
+    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
+
+#define IShapeTriangle_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
+    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+
+
+#define IShapeTriangle_GetBoundingBox(This,prect)	\
+    ( (This)->lpVtbl -> GetBoundingBox(This,prect) ) 
+
+#define IShapeTriangle_get_LineColor(This,pVal)	\
+    ( (This)->lpVtbl -> get_LineColor(This,pVal) ) 
+
+#define IShapeTriangle_put_LineColor(This,newVal)	\
+    ( (This)->lpVtbl -> put_LineColor(This,newVal) ) 
+
+#define IShapeTriangle_get_FillColor(This,pVal)	\
+    ( (This)->lpVtbl -> get_FillColor(This,pVal) ) 
+
+#define IShapeTriangle_put_FillColor(This,newVal)	\
+    ( (This)->lpVtbl -> put_FillColor(This,newVal) ) 
+
+
+#define IShapeTriangle_get_Vertex_X(This,nVertex,pVal)	\
+    ( (This)->lpVtbl -> get_Vertex_X(This,nVertex,pVal) ) 
+
+#define IShapeTriangle_put_Vertex_X(This,nVertex,newVal)	\
+    ( (This)->lpVtbl -> put_Vertex_X(This,nVertex,newVal) ) 
+
+#define IShapeTriangle_get_Vertex_Y(This,nVertex,pVal)	\
+    ( (This)->lpVtbl -> get_Vertex_Y(This,nVertex,pVal) ) 
+
+#define IShapeTriangle_put_Vertex_Y(This,nVertex,newVal)	\
+    ( (This)->lpVtbl -> put_Vertex_Y(This,nVertex,newVal) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IShapeTriangle_INTERFACE_DEFINED__ */
+
+
 
 #ifndef __shape_ctl_2Lib_LIBRARY_DEFINED__
 #define __shape_ctl_2Lib_LIBRARY_DEFINED__
@@ -708,6 +931,14 @@ EXTERN_C const CLSID CLSID_ShapeCircle;
 
 class DECLSPEC_UUID("0E658D92-E44E-429E-8D17-415EA7D86706")
 ShapeCircle;
+#endif
+
+EXTERN_C const CLSID CLSID_ShapeTriangle;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("B1A930E3-0822-481E-9CAF-F189ADE620B7")
+ShapeTriangle;
 #endif
 #endif /* __shape_ctl_2Lib_LIBRARY_DEFINED__ */
 

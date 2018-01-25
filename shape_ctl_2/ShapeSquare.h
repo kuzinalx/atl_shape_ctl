@@ -3,6 +3,7 @@
 #include "resource.h"       // main symbols
 #include <atlctl.h>
 #include "shape_ctl_2_i.h"
+#include "ShapeSquareImpl.h"
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
@@ -14,8 +15,9 @@ using namespace ATL;
 
 // CShapeSquare
 class ATL_NO_VTABLE CShapeSquare :
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public IDispatchImpl<IShapeSquare, &IID_IShapeSquare, &LIBID_shape_ctl_2Lib, /*wMajor =*/ 1, /*wMinor =*/ 0>,
+	//public CComObjectRootEx<CComSingleThreadModel>,
+	//public IDispatchImpl<IShapeSquare, &IID_IShapeSquare, &LIBID_shape_ctl_2Lib, /*wMajor =*/ 1, /*wMinor =*/ 0>,
+	public CShapeSquareImpl<IShapeSquare>,
 	public IOleControlImpl<CShapeSquare>,
 	public IOleObjectImpl<CShapeSquare>,
 	public IOleInPlaceActiveObjectImpl<CShapeSquare>,
@@ -35,8 +37,6 @@ public:
 
 	CShapeSquare()
 	{
-		m_rect.left = m_rect.top = 0;
-		m_rect.right = m_rect.bottom = 100;
 	}
 
 DECLARE_OLEMISC_STATUS(OLEMISC_RECOMPOSEONRESIZE |
@@ -110,50 +110,14 @@ END_MSG_MAP()
 
 // IShapeSquare
 
-	RECTL m_rect;
-	OLE_COLOR m_colorLine, m_colorFill;
+	
 public:
+	
 	HRESULT OnDraw(ATL_DRAWINFO& di)
 	{
-		/*HRGN hRgnOld = 0;
-		HRGN hRgnNew = 0;
-		bool bSelectOldRgn = false;
-		if ( di.prcBounds )
-		{
-			RECT& rc = *(RECT*)di.prcBounds;
-			// Set Clip region to the rectangle specified by di.prcBounds
-		
-			if (GetClipRgn(di.hdcDraw, hRgnOld) != 1)
-				hRgnOld = NULL;
-			
-
-			HRGN hRgnNew = CreateRectRgn(rc.left, rc.top, rc.right, rc.bottom);
-
-			if (hRgnNew != NULL)
-			{
-				bSelectOldRgn = (SelectClipRgn(di.hdcDraw, hRgnNew) != ERROR);
-			}
-		};*/
-		COLORREF c;
-		OleTranslateColor( m_colorFill, 0, &c );
-		HBRUSH hBrush = CreateSolidBrush( c );
-		OleTranslateColor( m_colorLine, 0, &c );
-		HPEN hPen = CreatePen( PS_SOLID, 0, c );
-		HGDIOBJ hOldBrush = SelectObject( di.hdcDraw, hBrush );
-		HGDIOBJ hOldPen = SelectObject( di.hdcDraw, hPen );
-
-		Rectangle(di.hdcDraw, m_rect.left, m_rect.top, m_rect.right, m_rect.bottom);
-
-		SelectObject( di.hdcDraw, hOldBrush );
-		SelectObject( di.hdcDraw, hOldPen );
-		DeleteObject( hBrush );
-		DeleteObject( hPen );
-
-		/*if (bSelectOldRgn)
-			SelectClipRgn(di.hdcDraw, hRgnOld);
-
-		DeleteObject(hRgnNew);
-		*/
+		OnDrawHelper( di, [this,di]() {
+			Rectangle(di.hdcDraw, m_rect.left, m_rect.top, m_rect.right, m_rect.bottom);
+		});
 		return S_OK;
 	}
 
@@ -169,17 +133,6 @@ public:
 	{
 	}
 
-	STDMETHOD(GetBoundingBox)(LONG* prect);
-	STDMETHOD(get_Left)(LONG* pVal);
-	STDMETHOD(put_Left)(LONG newVal);
-	STDMETHOD(get_Top)(LONG* pVal);
-	STDMETHOD(put_Top)(LONG newVal);
-	STDMETHOD(get_Size)(LONG* pVal);
-	STDMETHOD(put_Size)(LONG newVal);
-	STDMETHOD(get_LineColor)(OLE_COLOR* pVal);
-	STDMETHOD(put_LineColor)(OLE_COLOR newVal);
-	STDMETHOD(get_FillColor)(OLE_COLOR* pVal);
-	STDMETHOD(put_FillColor)(OLE_COLOR newVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ShapeSquare), CShapeSquare)

@@ -53,6 +53,20 @@ interface IShapeCircle : IShapeSquare{
 };
 
 [
+	object,
+	uuid(70044D22-A4C8-4B98-AE07-FED6E9E4C617),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IShapeTriangle : IShape{
+	[propget, id(4)] HRESULT Vertex_X([in] USHORT nVertex, [out, retval] LONG* pVal);
+	[propput, id(4)] HRESULT Vertex_X([in] USHORT nVertex, [in] LONG newVal);
+	[propget, id(5)] HRESULT Vertex_Y([in] USHORT nVertex, [out, retval] LONG* pVal);
+	[propput, id(5)] HRESULT Vertex_Y([in] USHORT nVertex, [in] LONG newVal);
+};
+
+[
 	uuid(E465960F-0847-4BA6-8AAC-318E3E377480),
 	version(1.0),
 ]
@@ -74,6 +88,14 @@ library shape_ctl_2Lib
 	coclass ShapeCircle
 	{
 		[default] interface IShapeCircle;
+	};
+	[
+		uuid(B1A930E3-0822-481E-9CAF-F189ADE620B7),		
+		control
+	]
+	coclass ShapeTriangle
+	{
+		[default] interface IShapeTriangle;
 	};
 };
 

@@ -1,0 +1,22 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {B1A930E3-0822-481E-9CAF-F189ADE620B7} = s 'ShapeTriangle Class'
+		{
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove Control
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 110'
+			MiscStatus = s '0'
+			{
+			    '1' = s '%OLEMISC%'
+			}
+			TypeLib = s '{E465960F-0847-4BA6-8AAC-318E3E377480}'
+			Version = s '1.0'
+		}
+	}
+}

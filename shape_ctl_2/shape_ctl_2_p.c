@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Jan 25 11:20:14 2018
+/* at Thu Jan 25 17:57:53 2018
  */
 /* Compiler settings for shape_ctl_2.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -50,7 +50,7 @@
 #include "shape_ctl_2_i.h"
 
 #define TYPE_FORMAT_STRING_SIZE   7                                 
-#define PROC_FORMAT_STRING_SIZE   397                               
+#define PROC_FORMAT_STRING_SIZE   565                               
 #define EXPR_FORMAT_STRING_SIZE   1                                 
 #define TRANSMIT_AS_TABLE_SIZE    0            
 #define WIRE_MARSHAL_TABLE_SIZE   0            
@@ -102,6 +102,13 @@ extern const MIDL_STUB_DESC Object_StubDesc;
 
 extern const MIDL_SERVER_INFO IShapeCircle_ServerInfo;
 extern const MIDL_STUBLESS_PROXY_INFO IShapeCircle_ProxyInfo;
+
+
+extern const MIDL_STUB_DESC Object_StubDesc;
+
+
+extern const MIDL_SERVER_INFO IShapeTriangle_ServerInfo;
+extern const MIDL_STUBLESS_PROXY_INFO IShapeTriangle_ProxyInfo;
 
 
 
@@ -463,6 +470,158 @@ static const shape_ctl_2_MIDL_PROC_FORMAT_STRING shape_ctl_2__MIDL_ProcFormatStr
 /* 394 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
+	/* Procedure get_Vertex_X */
+
+/* 396 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 398 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 402 */	NdrFcShort( 0xc ),	/* 12 */
+/* 404 */	NdrFcShort( 0x10 ),	/* x86 Stack size/offset = 16 */
+/* 406 */	NdrFcShort( 0x6 ),	/* 6 */
+/* 408 */	NdrFcShort( 0x24 ),	/* 36 */
+/* 410 */	0x44,		/* Oi2 Flags:  has return, has ext, */
+			0x3,		/* 3 */
+/* 412 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 414 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 416 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 418 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Parameter nVertex */
+
+/* 420 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 422 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 424 */	0x6,		/* FC_SHORT */
+			0x0,		/* 0 */
+
+	/* Parameter pVal */
+
+/* 426 */	NdrFcShort( 0x2150 ),	/* Flags:  out, base type, simple ref, srv alloc size=8 */
+/* 428 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 430 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Return value */
+
+/* 432 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 434 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
+/* 436 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Procedure put_Vertex_X */
+
+/* 438 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 440 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 444 */	NdrFcShort( 0xd ),	/* 13 */
+/* 446 */	NdrFcShort( 0x10 ),	/* x86 Stack size/offset = 16 */
+/* 448 */	NdrFcShort( 0xe ),	/* 14 */
+/* 450 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 452 */	0x44,		/* Oi2 Flags:  has return, has ext, */
+			0x3,		/* 3 */
+/* 454 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 456 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 458 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 460 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Parameter nVertex */
+
+/* 462 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 464 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 466 */	0x6,		/* FC_SHORT */
+			0x0,		/* 0 */
+
+	/* Parameter newVal */
+
+/* 468 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 470 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 472 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Return value */
+
+/* 474 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 476 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
+/* 478 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Procedure get_Vertex_Y */
+
+/* 480 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 482 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 486 */	NdrFcShort( 0xe ),	/* 14 */
+/* 488 */	NdrFcShort( 0x10 ),	/* x86 Stack size/offset = 16 */
+/* 490 */	NdrFcShort( 0x6 ),	/* 6 */
+/* 492 */	NdrFcShort( 0x24 ),	/* 36 */
+/* 494 */	0x44,		/* Oi2 Flags:  has return, has ext, */
+			0x3,		/* 3 */
+/* 496 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 498 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 500 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 502 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Parameter nVertex */
+
+/* 504 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 506 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 508 */	0x6,		/* FC_SHORT */
+			0x0,		/* 0 */
+
+	/* Parameter pVal */
+
+/* 510 */	NdrFcShort( 0x2150 ),	/* Flags:  out, base type, simple ref, srv alloc size=8 */
+/* 512 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 514 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Return value */
+
+/* 516 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 518 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
+/* 520 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Procedure put_Vertex_Y */
+
+/* 522 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 524 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 528 */	NdrFcShort( 0xf ),	/* 15 */
+/* 530 */	NdrFcShort( 0x10 ),	/* x86 Stack size/offset = 16 */
+/* 532 */	NdrFcShort( 0xe ),	/* 14 */
+/* 534 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 536 */	0x44,		/* Oi2 Flags:  has return, has ext, */
+			0x3,		/* 3 */
+/* 538 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 540 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 542 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 544 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Parameter nVertex */
+
+/* 546 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 548 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 550 */	0x6,		/* FC_SHORT */
+			0x0,		/* 0 */
+
+	/* Parameter newVal */
+
+/* 552 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 554 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 556 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Return value */
+
+/* 558 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 560 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
+/* 562 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
 			0x0
         }
     };
@@ -766,6 +925,98 @@ CInterfaceStubVtbl _IShapeCircleStubVtbl =
     CStdStubBuffer_DELEGATING_METHODS
 };
 
+
+/* Object interface: IShapeTriangle, ver. 0.0,
+   GUID={0x70044D22,0xA4C8,0x4B98,{0xAE,0x07,0xFE,0xD6,0xE9,0xE4,0xC6,0x17}} */
+
+#pragma code_seg(".orpc")
+static const unsigned short IShapeTriangle_FormatStringOffsetTable[] =
+    {
+    (unsigned short) -1,
+    (unsigned short) -1,
+    (unsigned short) -1,
+    (unsigned short) -1,
+    0,
+    36,
+    72,
+    108,
+    144,
+    396,
+    438,
+    480,
+    522
+    };
+
+static const MIDL_STUBLESS_PROXY_INFO IShapeTriangle_ProxyInfo =
+    {
+    &Object_StubDesc,
+    shape_ctl_2__MIDL_ProcFormatString.Format,
+    &IShapeTriangle_FormatStringOffsetTable[-3],
+    0,
+    0,
+    0
+    };
+
+
+static const MIDL_SERVER_INFO IShapeTriangle_ServerInfo = 
+    {
+    &Object_StubDesc,
+    0,
+    shape_ctl_2__MIDL_ProcFormatString.Format,
+    &IShapeTriangle_FormatStringOffsetTable[-3],
+    0,
+    0,
+    0,
+    0};
+CINTERFACE_PROXY_VTABLE(16) _IShapeTriangleProxyVtbl = 
+{
+    &IShapeTriangle_ProxyInfo,
+    &IID_IShapeTriangle,
+    IUnknown_QueryInterface_Proxy,
+    IUnknown_AddRef_Proxy,
+    IUnknown_Release_Proxy ,
+    0 /* IDispatch::GetTypeInfoCount */ ,
+    0 /* IDispatch::GetTypeInfo */ ,
+    0 /* IDispatch::GetIDsOfNames */ ,
+    0 /* IDispatch_Invoke_Proxy */ ,
+    (void *) (INT_PTR) -1 /* IShape::GetBoundingBox */ ,
+    (void *) (INT_PTR) -1 /* IShape::get_LineColor */ ,
+    (void *) (INT_PTR) -1 /* IShape::put_LineColor */ ,
+    (void *) (INT_PTR) -1 /* IShape::get_FillColor */ ,
+    (void *) (INT_PTR) -1 /* IShape::put_FillColor */ ,
+    (void *) (INT_PTR) -1 /* IShapeTriangle::get_Vertex_X */ ,
+    (void *) (INT_PTR) -1 /* IShapeTriangle::put_Vertex_X */ ,
+    (void *) (INT_PTR) -1 /* IShapeTriangle::get_Vertex_Y */ ,
+    (void *) (INT_PTR) -1 /* IShapeTriangle::put_Vertex_Y */
+};
+
+
+static const PRPC_STUB_FUNCTION IShapeTriangle_table[] =
+{
+    STUB_FORWARDING_FUNCTION,
+    STUB_FORWARDING_FUNCTION,
+    STUB_FORWARDING_FUNCTION,
+    STUB_FORWARDING_FUNCTION,
+    NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2
+};
+
+CInterfaceStubVtbl _IShapeTriangleStubVtbl =
+{
+    &IID_IShapeTriangle,
+    &IShapeTriangle_ServerInfo,
+    16,
+    &IShapeTriangle_table[-3],
+    CStdStubBuffer_DELEGATING_METHODS
+};
+
 static const MIDL_STUB_DESC Object_StubDesc = 
     {
     0,
@@ -792,6 +1043,7 @@ static const MIDL_STUB_DESC Object_StubDesc =
 
 const CInterfaceProxyVtbl * const _shape_ctl_2_ProxyVtblList[] = 
 {
+    ( CInterfaceProxyVtbl *) &_IShapeTriangleProxyVtbl,
     ( CInterfaceProxyVtbl *) &_IShapeSquareProxyVtbl,
     ( CInterfaceProxyVtbl *) &_IShapeCircleProxyVtbl,
     ( CInterfaceProxyVtbl *) &_IShapeProxyVtbl,
@@ -800,6 +1052,7 @@ const CInterfaceProxyVtbl * const _shape_ctl_2_ProxyVtblList[] =
 
 const CInterfaceStubVtbl * const _shape_ctl_2_StubVtblList[] = 
 {
+    ( CInterfaceStubVtbl *) &_IShapeTriangleStubVtbl,
     ( CInterfaceStubVtbl *) &_IShapeSquareStubVtbl,
     ( CInterfaceStubVtbl *) &_IShapeCircleStubVtbl,
     ( CInterfaceStubVtbl *) &_IShapeStubVtbl,
@@ -808,6 +1061,7 @@ const CInterfaceStubVtbl * const _shape_ctl_2_StubVtblList[] =
 
 PCInterfaceName const _shape_ctl_2_InterfaceNamesList[] = 
 {
+    "IShapeTriangle",
     "IShapeSquare",
     "IShapeCircle",
     "IShape",
@@ -816,6 +1070,7 @@ PCInterfaceName const _shape_ctl_2_InterfaceNamesList[] =
 
 const IID *  const _shape_ctl_2_BaseIIDList[] = 
 {
+    &IID_IDispatch,
     &IID_IDispatch,
     &IID_IDispatch,
     &IID_IDispatch,
@@ -829,9 +1084,9 @@ int __stdcall _shape_ctl_2_IID_Lookup( const IID * pIID, int * pIndex )
 {
     IID_BS_LOOKUP_SETUP
 
-    IID_BS_LOOKUP_INITIAL_TEST( _shape_ctl_2, 3, 2 )
+    IID_BS_LOOKUP_INITIAL_TEST( _shape_ctl_2, 4, 2 )
     IID_BS_LOOKUP_NEXT_TEST( _shape_ctl_2, 1 )
-    IID_BS_LOOKUP_RETURN_RESULT( _shape_ctl_2, 3, *pIndex )
+    IID_BS_LOOKUP_RETURN_RESULT( _shape_ctl_2, 4, *pIndex )
     
 }
 
@@ -842,7 +1097,7 @@ const ExtendedProxyFileInfo shape_ctl_2_ProxyFileInfo =
     (const PCInterfaceName * ) & _shape_ctl_2_InterfaceNamesList,
     (const IID ** ) & _shape_ctl_2_BaseIIDList,
     & _shape_ctl_2_IID_Lookup, 
-    3,
+    4,
     2,
     0, /* table of [async_uuid] interfaces */
     0, /* Filler1 */

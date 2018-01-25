@@ -28,13 +28,38 @@ END_MESSAGE_MAP()
 
 // Cshape_ctl_cliDoc construction/destruction
 
-Cshape_ctl_cliDoc::Cshape_ctl_cliDoc() : m_pageSize( 5000, 3000 )
+Cshape_ctl_cliDoc::Cshape_ctl_cliDoc() //: m_pageSize( 5000, 3000 )
 {
 	// TODO: add one-time construction code here
 }
 
 Cshape_ctl_cliDoc::~Cshape_ctl_cliDoc()
 {
+}
+
+inline LONG DistanceToRect( const POINT& pt, const RECT& r )
+{
+	auto nsqrt = [pt]( int x, int y ) { return (int)( sqrt( (pt.x-x)*(pt.x-x) + (pt.y-y)*(pt.y-y) ) ); };
+	if ( pt.x < r.left )
+	{
+		if ( pt.y < r.top )
+			return nsqrt( r.left, r.top );
+		else if ( pt.y > r.bottom )
+			return nsqrt( r.left, r.bottom );
+		return ( r.left - pt.x );
+	};
+	if ( pt.x > r.right )
+	{
+		if ( pt.y < r.top )
+			return nsqrt( r.right, r.top );
+		else if ( pt.y > r.bottom )
+			return nsqrt( r.right, r.bottom );
+		return ( pt.x - r.right );
+	};
+	if ( pt.y < r.top )
+		return ( r.top - pt.y );
+	ASSERT( pt.y >= r.bottom );
+	return ( pt.y - r.bottom );
 }
 
 void Cshape_ctl_cliDoc::AddShape( const CRect& rCli )
@@ -45,39 +70,22 @@ void Cshape_ctl_cliDoc::AddShape( const CRect& rCli )
 		srand( ( unsigned )time( 0 ) );
 		bFirstCall = false;
 	};
-	
+
 	// random double in [0;1]
 	auto rand1 = []() { return (double)rand()/RAND_MAX; };
 	// random int in [0;nmax]
 	auto rand_int = [rand1]( int nmax ) { return ( int )round( nmax*rand1() ); };
 
-	int nTypes = 2;
+	int nTypes = 3;
 	int type = rand_int( nTypes - 1 ); // random object type
 	ASSERT( type >= 0 && type < nTypes );
-	IID ids[] = { __uuidof( ShapeCircle ), __uuidof( ShapeSquare ) };
+	IID ids[] = { __uuidof( ShapeCircle ), __uuidof( ShapeSquare ), __uuidof( ShapeTriangle ) };
 	CShape shape;
 	COleException *e = new COleException;
 	if ( !shape.CreateDispatch( ids[type], e ) )
 		throw e;
 
-	CSize sz, sCli = rCli.Size();
-	// random value in the range [cx1;cx2]/10
-	auto rand_size = [rand1]( int cx1, int cx2 ){ return ( int )round( ( rand1()*( cx2 - cx1 ) + cx1 )/10 ); };
-	if ( sCli.cx < sCli.cy )
-	{
-		sz.cx = rand_size( sCli.cx/2, sCli.cx );
-		sz.cy = sz.cx;
-	}
-	else
-	{
-		sz.cy = rand_size( sCli.cy/2, sCli.cy );
-		sz.cx = sz.cy;
-	};
-
-	CPoint p; // random top-left
-	p.x = rand_int( sCli.cx - sz.cx );
-	p.y = rand_int( sCli.cy - sz.cy );
-
+	// available colors
 	static const COLORREF clrs[8] = { 
 		RGB( 0xAA, 0xC0, 0 ),
 		RGB( 0, 0xC0, 0 ),
@@ -89,9 +97,71 @@ void Cshape_ctl_cliDoc::AddShape( const CRect& rCli )
 		RGB( 0x10, 0xF0, 0x10 )
 	};
 
+	// set random color
 	int nColor = rand_int( 7 );
 	shape.put_FillColor( clrs[nColor] );
 	shape.put_LineColor( clrs[nColor] );
+
+	CSize sz, sCli = rCli.Size();
+	// random value in the range [cx1;cx2]/10
+	auto rand_size = [rand1]( int cx1, int cx2 ){ return ( int )round( ( rand1()*( cx2 - cx1 ) + cx1 )/5 ); };
+	if ( sCli.cx < sCli.cy )
+	{
+		sz.cx = rand_size( sCli.cx/2, sCli.cx );
+		sz.cy = sz.cx;
+	}
+	else
+	{
+		sz.cy = rand_size( sCli.cy/2, sCli.cy );
+		sz.cx = sz.cy;
+	};
+
+
+	CPoint p; // random top-left
+
+	size_t uCellSize = 100;
+
+	while ( true )
+	{
+		p.x = rand_int( sCli.cx - sz.cx );
+		p.y = rand_int( sCli.cy - sz.cy );
+
+		CPoint pc( p.x + sz.cx/2, p.y + sz.cy/2 );
+		pr_int n( pc.x/uCellSize, pc.y/uCellSize );
+		const vector<size_t>& v = m_shapeMap[n];
+		size_t i = 0;
+		LONG lDistMin = ( LONG )( min( sz.cx, sz.cy )*sqrt(2.) ); // this is diagonal of the rect
+		for ( ; i < v.size(); i++ )
+		{
+			RECT r;
+			m_shapes[v[i]]->GetBoundingBox( ( LONG* )&r );
+			if ( PtInRect( &r, pc ) ) break;
+			LONG l = 2*DistanceToRect( pc, r );
+			lDistMin = lDistMin < l ? lDistMin : l;
+		};
+		if ( i < v.size() ) continue;
+
+		for ( int nx = n.first-1; nx <= n.first+1; nx++ ) for ( int ny = n.second-1; ny <= n.second+1; ny++ )
+		{
+			if ( nx == n.first && ny == n.second ) continue;
+			const vector<size_t>& v = m_shapeMap[make_pair( nx, ny )];
+			for ( i = 0; i < v.size(); i++ )
+			{
+				RECT r;
+				m_shapes[v[i]]->GetBoundingBox( ( LONG* )&r );
+				LONG l = 2*DistanceToRect( pc, r );
+				lDistMin = lDistMin < l ? lDistMin : l;
+			};
+		};
+
+		lDistMin = ( LONG )round( lDistMin/sqrt(2.) ); // from diagonal to side
+		p.x = pc.x - lDistMin/2;
+		p.y = pc.y - lDistMin/2;
+		sz.cx = sz.cy = lDistMin;
+		break;
+	};
+
+	
 	
 	IShapeSquarePtr wSquare = shape.m_lpDispatch;
 	if ( wSquare )
@@ -100,7 +170,29 @@ void Cshape_ctl_cliDoc::AddShape( const CRect& rCli )
 		wSquare->put_Top( p.y );
 		wSquare->put_Size( sz.cx );
 	};
+	IShapeTrianglePtr wTri = shape.m_lpDispatch;
+	if ( wTri )
+	{
+		wTri->PutVertex_X( 0, p.x );
+		wTri->PutVertex_Y( 0, p.y );
+		wTri->PutVertex_X( 1, p.x + sz.cx );
+		wTri->PutVertex_Y( 1, p.y );
+		wTri->PutVertex_X( 2, p.x + sz.cx/2 );
+		wTri->PutVertex_Y( 2, p.y + sz.cy );
+	};
 	m_shapes.push_back( shape.m_lpDispatch );
+
+	{
+		RECT r;
+		shape.GetBoundingBox( ( LONG* )&r );
+		r.left /= uCellSize;
+		r.right /= uCellSize;
+		r.top /= uCellSize;
+		r.bottom /= uCellSize;
+		for ( int i = r.left; i <= r.right; i++ ) for ( int j = r.top; j <= r.bottom; j++ )
+			m_shapeMap[make_pair(i,j)].push_back( m_shapes.size()-1 );
+	};
+
 	UpdateAllViews( 0 );
 }
 
@@ -111,22 +203,7 @@ BOOL Cshape_ctl_cliDoc::OnNewDocument()
 
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
-	/*COleException *e = new COleException;
-	{
-		CShapeSquare s;
-		if ( !s.CreateDispatch( __uuidof( ShapeSquare ), e ) )
-			throw e;
-		s.put_Left( 100 );
-		s.put_Top( 100 );
-		m_shapes.push_back( s.m_lpDispatch );
-	};
-
-	{
-		CShapeCircle s;
-		if ( !s.CreateDispatch( __uuidof( ShapeCircle ), e ) )
-			throw e;
-		m_shapes.push_back( s.m_lpDispatch );
-	};*/
+	
 	
 	return TRUE;
 }

@@ -72,14 +72,11 @@ void Cshape_ctl_cliView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	/*CRect rp( CPoint( 0, 0 ), pDoc->m_pageSize ); // page
-	pDC->Rectangle( &rp );
-	ASSERT( pDoc->m_shapes.size() == m_shapes.size() );*/
+	
 	RECTL r;
 	for ( size_t i = 0; i < m_shapes.size(); ++i )
 	{
 		pDoc->m_shapes[i]->GetBoundingBox( ( LONG* )&r );
-		//pDC->Rectangle( ( RECT* )&r );
 		m_shapes[i]->Draw( DVASPECT_CONTENT, 0, 0, 0, pDC->m_hAttribDC, pDC->m_hDC, &r, 0, 0, 0 );
 	};
 }

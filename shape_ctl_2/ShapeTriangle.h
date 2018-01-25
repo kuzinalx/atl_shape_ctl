@@ -1,9 +1,9 @@
-// ShapeCircle.h : Declaration of the CShapeCircle
+// ShapeTriangle.h : Declaration of the CShapeTriangle
 #pragma once
 #include "resource.h"       // main symbols
 #include <atlctl.h>
 #include "shape_ctl_2_i.h"
-#include "ShapeSquareImpl.h"
+#include "ShapeImpl.h"
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
@@ -13,30 +13,31 @@ using namespace ATL;
 
 
 
-// CShapeCircle
-class ATL_NO_VTABLE CShapeCircle :
+// CShapeTriangle
+class ATL_NO_VTABLE CShapeTriangle :
 	//public CComObjectRootEx<CComSingleThreadModel>,
-	//public IDispatchImpl<IShapeCircle, &IID_IShapeCircle, &LIBID_shape_ctl_2Lib, /*wMajor =*/ 1, /*wMinor =*/ 0>,
-	public CShapeSquareImpl<IShapeCircle>,
-	public IOleControlImpl<CShapeCircle>,
-	public IOleObjectImpl<CShapeCircle>,
-	public IOleInPlaceActiveObjectImpl<CShapeCircle>,
-	public IViewObjectExImpl<CShapeCircle>,
-	public IOleInPlaceObjectWindowlessImpl<CShapeCircle>,
+	//public IDispatchImpl<IShapeTriangle, &IID_IShapeTriangle, &LIBID_shape_ctl_2Lib, /*wMajor =*/ 1, /*wMinor =*/ 0>,
+	public CShapeImpl<IShapeTriangle>,
+	public IOleControlImpl<CShapeTriangle>,
+	public IOleObjectImpl<CShapeTriangle>,
+	public IOleInPlaceActiveObjectImpl<CShapeTriangle>,
+	public IViewObjectExImpl<CShapeTriangle>,
+	public IOleInPlaceObjectWindowlessImpl<CShapeTriangle>,
 	public ISupportErrorInfo,
-	public IQuickActivateImpl<CShapeCircle>,
+	public IQuickActivateImpl<CShapeTriangle>,
 #ifndef _WIN32_WCE
-	public IDataObjectImpl<CShapeCircle>,
+	public IDataObjectImpl<CShapeTriangle>,
 #endif
-	public IProvideClassInfo2Impl<&CLSID_ShapeCircle, NULL, &LIBID_shape_ctl_2Lib>,
-	public CComCoClass<CShapeCircle, &CLSID_ShapeCircle>,
-	public CComControl<CShapeCircle>
+	public IProvideClassInfo2Impl<&CLSID_ShapeTriangle, NULL, &LIBID_shape_ctl_2Lib>,
+	public CComCoClass<CShapeTriangle, &CLSID_ShapeTriangle>,
+	public CComControl<CShapeTriangle>
 {
 public:
 
 
-	CShapeCircle()
+	CShapeTriangle()
 	{
+		memset( m_points, 0, 3*sizeof(POINT) );
 	}
 
 DECLARE_OLEMISC_STATUS(OLEMISC_RECOMPOSEONRESIZE |
@@ -46,13 +47,12 @@ DECLARE_OLEMISC_STATUS(OLEMISC_RECOMPOSEONRESIZE |
 	OLEMISC_SETCLIENTSITEFIRST
 )
 
-DECLARE_REGISTRY_RESOURCEID(IDR_SHAPECIRCLE)
+DECLARE_REGISTRY_RESOURCEID(IDR_SHAPETRIANGLE)
 
 
-BEGIN_COM_MAP(CShapeCircle)
+BEGIN_COM_MAP(CShapeTriangle)
 	COM_INTERFACE_ENTRY(IShape)
-	COM_INTERFACE_ENTRY(IShapeSquare)
-	COM_INTERFACE_ENTRY(IShapeCircle)
+	COM_INTERFACE_ENTRY(IShapeTriangle)
 	COM_INTERFACE_ENTRY(IDispatch)
 	COM_INTERFACE_ENTRY(IViewObjectEx)
 	COM_INTERFACE_ENTRY(IViewObject2)
@@ -72,7 +72,7 @@ BEGIN_COM_MAP(CShapeCircle)
 	COM_INTERFACE_ENTRY(IProvideClassInfo2)
 END_COM_MAP()
 
-BEGIN_PROP_MAP(CShapeCircle)
+BEGIN_PROP_MAP(CShapeTriangle)
 	PROP_DATA_ENTRY("_cx", m_sizeExtent.cx, VT_UI4)
 	PROP_DATA_ENTRY("_cy", m_sizeExtent.cy, VT_UI4)
 	// Example entries
@@ -81,8 +81,8 @@ BEGIN_PROP_MAP(CShapeCircle)
 END_PROP_MAP()
 
 
-BEGIN_MSG_MAP(CShapeCircle)
-	CHAIN_MSG_MAP(CComControl<CShapeCircle>)
+BEGIN_MSG_MAP(CShapeTriangle)
+	CHAIN_MSG_MAP(CComControl<CShapeTriangle>)
 	DEFAULT_REFLECTION_HANDLER()
 END_MSG_MAP()
 // Handler prototypes:
@@ -95,7 +95,7 @@ END_MSG_MAP()
 	{
 		static const IID* const arr[] =
 		{
-			&IID_IShapeCircle,
+			&IID_IShapeTriangle,
 		};
 
 		for (int i=0; i<sizeof(arr)/sizeof(arr[0]); i++)
@@ -109,13 +109,14 @@ END_MSG_MAP()
 // IViewObjectEx
 	DECLARE_VIEW_STATUS(VIEWSTATUS_SOLIDBKGND | VIEWSTATUS_OPAQUE)
 
-// IShapeCircle
-	
+// IShapeTriangle
+	POINT m_points[3];
+
 public:
 	HRESULT OnDraw(ATL_DRAWINFO& di)
 	{
 		OnDrawHelper( di, [this,di]() {
-			Ellipse(di.hdcDraw, m_rect.left, m_rect.top, m_rect.right, m_rect.bottom);
+			Polygon( di.hdcDraw, m_points, 3 );
 		});
 		return S_OK;
 	}
@@ -132,7 +133,10 @@ public:
 	{
 	}
 
-	
+	STDMETHOD(get_Vertex_X)(USHORT nVertex, LONG *pVal);
+	STDMETHOD(put_Vertex_X)(USHORT nVertex, LONG newVal);
+	STDMETHOD(get_Vertex_Y)(USHORT nVertex, LONG *pVal);
+	STDMETHOD(put_Vertex_Y)(USHORT nVertex, LONG newVal);
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(ShapeCircle), CShapeCircle)
+OBJECT_ENTRY_AUTO(__uuidof(ShapeTriangle), CShapeTriangle)

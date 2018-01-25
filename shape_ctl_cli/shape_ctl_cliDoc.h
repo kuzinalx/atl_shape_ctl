@@ -9,9 +9,13 @@
 #include "CShapeSquare.h"
 //#include <atlcomcli.h>
 #include <vector>
+#include <map>
 
-//typedef CComPtr<IShape> IShapePtr;
-typedef std::vector<IShapePtr> v_IShapePtr;
+using namespace std;
+
+typedef vector<IShapePtr> v_IShapePtr;
+typedef pair<int,int> pr_int;
+typedef map<pr_int, vector<size_t> > ShapeMap;
 
 class Cshape_ctl_cliDoc : public CDocument
 {
@@ -21,8 +25,9 @@ protected: // create from serialization only
 
 // Attributes
 public:
-	v_IShapePtr m_shapes;
-	CSize m_pageSize;
+	v_IShapePtr m_shapes; // Shape objects
+	//CSize m_pageSize;
+	ShapeMap m_shapeMap;
 // Operations
 public:
 	void AddShape( const CRect& rCli );
