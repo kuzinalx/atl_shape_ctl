@@ -1,0 +1,114 @@
+// shape_ctl.idl : IDL source for shape_ctl
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (shape_ctl.tlb) and marshalling code.
+
+#include "olectl.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(DA8DCF99-FB28-4BAC-8611-5B5E0A66E7FB),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IShapeCtl : IDispatch{
+	[propput, bindable, requestedit, id(DISPID_FILLCOLOR)]
+	HRESULT FillColor([in]OLE_COLOR clr);
+	[propget, bindable, requestedit, id(DISPID_FILLCOLOR)]
+	HRESULT FillColor([out, retval]OLE_COLOR* pclr);
+};
+
+[
+	object,
+	uuid(7FD27191-FA99-48FC-8066-07D1511DF8B7),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface ISimpleObject : IDispatch{
+};
+[
+	object,
+	uuid(06B5F299-AF7B-4000-A4AB-FF1BAA99BC67),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IShape : IDispatch{
+	[propput, bindable, requestedit, id(DISPID_BORDERCOLOR)]
+	HRESULT BorderColor([in]OLE_COLOR clr);
+	[propget, bindable, requestedit, id(DISPID_BORDERCOLOR)]
+	HRESULT BorderColor([out, retval]OLE_COLOR* pclr);
+	[propput, bindable, requestedit, id(DISPID_FILLCOLOR)]
+	HRESULT FillColor([in]OLE_COLOR clr);
+	[propget, bindable, requestedit, id(DISPID_FILLCOLOR)]
+	HRESULT FillColor([out, retval]OLE_COLOR* pclr);
+};
+
+
+[
+	object,
+	uuid(6A70521F-8840-4BC3-8073-1B7CE4701020),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IShapeSquare : IShape{
+};
+
+
+[
+	uuid(4E5D161D-8CA2-4104-AA17-9EB022F5DE6F),
+	version(1.0),
+]
+library shape_ctlLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(CF2966A9-6FB1-41C8-BF6E-25FDA9F5F9D1)		
+	]
+	dispinterface _IShapeCtlEvents
+	{
+		properties:
+		methods:
+	};
+	[
+		uuid(949D5A59-1494-4135-B01B-31B475822B4A),		
+		control
+	]
+	coclass ShapeCtl
+	{
+		[default] interface IShapeCtl;
+		[default, source] dispinterface _IShapeCtlEvents;
+	};
+	[
+		uuid(6A6A572F-918C-44A1-9E09-4413FC367224)		
+	]
+	coclass SimpleObject
+	{
+		[default] interface ISimpleObject;
+	};
+	[
+		uuid(E430D248-9260-4FED-A4C8-8C858A00BDC1),		
+		control
+	]
+	coclass Shape
+	{
+		[default] interface IShape;
+	};
+
+	//Square object
+	[
+		uuid(E471AB44-6139-47D4-B657-B6348481615D),		
+		control
+	]
+	coclass ShapeSquare
+	{
+		[default] interface IShapeSquare;
+	};
+};
+

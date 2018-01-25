@@ -1,0 +1,79 @@
+// shape_ctl_2.idl : IDL source for shape_ctl_2
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (shape_ctl_2.tlb) and marshalling code.
+
+#include "olectl.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(32542684-F33B-4C0D-95B1-262C7F7DD6C1),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IShape : IDispatch{
+	[id(1)] HRESULT GetBoundingBox([out] LONG* prect);
+	[propget, id(2)] HRESULT LineColor([out, retval] OLE_COLOR* pVal);
+	[propput, id(2)] HRESULT LineColor([in] OLE_COLOR newVal);
+	[propget, id(3)] HRESULT FillColor([out, retval] OLE_COLOR* pVal);
+	[propput, id(3)] HRESULT FillColor([in] OLE_COLOR newVal);
+};
+
+[
+	object,
+	uuid(8F970C27-9DF6-4F6C-B541-67912420EB11),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IShapeSquare : IShape{
+	[propget, id(4)] HRESULT Left([out, retval] LONG* pVal);
+	[propput, id(4)] HRESULT Left([in] LONG newVal);
+	[propget, id(5)] HRESULT Top([out, retval] LONG* pVal);
+	[propput, id(5)] HRESULT Top([in] LONG newVal);
+	[propget, id(6)] HRESULT Size([out, retval] LONG* pVal);
+	[propput, id(6)] HRESULT Size([in] LONG newVal);
+};
+
+
+
+
+[
+	object,
+	uuid(5C066A5D-DDE8-41A1-99BD-F62A6ECA03AB),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IShapeCircle : IShapeSquare{
+};
+
+[
+	uuid(E465960F-0847-4BA6-8AAC-318E3E377480),
+	version(1.0),
+]
+library shape_ctl_2Lib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(FE7A5DF1-18E4-416E-9593-5FF5A7C2BC83),		
+		control
+	]
+	coclass ShapeSquare
+	{
+		[default] interface IShapeSquare;
+	};
+	[
+		uuid(0E658D92-E44E-429E-8D17-415EA7D86706),		
+		control
+	]
+	coclass ShapeCircle
+	{
+		[default] interface IShapeCircle;
+	};
+};
+
