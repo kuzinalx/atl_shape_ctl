@@ -62,7 +62,7 @@ inline LONG DistanceToRect( const POINT& pt, const RECT& r )
 	return ( pt.y - r.bottom );
 }
 
-void Cshape_ctl_cliDoc::AddShape( const CRect& rCli )
+void Cshape_ctl_cliDoc::AddShape( const CRect& rCli, const POINT* ppt )
 {
 	static bool bFirstCall = true;
 	if ( bFirstCall )
@@ -119,12 +119,21 @@ void Cshape_ctl_cliDoc::AddShape( const CRect& rCli )
 
 	CPoint p; // random top-left
 
-	size_t uCellSize = 100;
+	int uCellSize = 100;
 
 	while ( true )
 	{
-		p.x = rand_int( sCli.cx - sz.cx );
-		p.y = rand_int( sCli.cy - sz.cy );
+		if ( ppt )
+		{
+			p = *ppt;
+			p.x -= sz.cx/2;
+			p.y -= sz.cy/2;
+		}
+		else
+		{
+			p.x = rand_int( sCli.cx - sz.cx );
+			p.y = rand_int( sCli.cy - sz.cy );
+		};
 
 		CPoint pc( p.x + sz.cx/2, p.y + sz.cy/2 );
 		pr_int n( pc.x/uCellSize, pc.y/uCellSize );
@@ -139,7 +148,13 @@ void Cshape_ctl_cliDoc::AddShape( const CRect& rCli )
 			LONG l = 2*DistanceToRect( pc, r );
 			lDistMin = lDistMin < l ? lDistMin : l;
 		};
-		if ( i < v.size() ) continue;
+		if ( i < v.size() ) 
+		{
+			if ( ppt )
+				return; // failed to create at given position, do not test another
+			else
+				continue;
+		};
 
 		for ( int nx = n.first-1; nx <= n.first+1; nx++ ) for ( int ny = n.second-1; ny <= n.second+1; ny++ )
 		{

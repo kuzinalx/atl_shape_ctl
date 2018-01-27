@@ -29,6 +29,7 @@ BEGIN_MESSAGE_MAP(Cshape_ctl_cliView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	ON_WM_LBUTTONDBLCLK()
+	ON_WM_RBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
 // Cshape_ctl_cliView construction/destruction
@@ -37,6 +38,8 @@ Cshape_ctl_cliView::Cshape_ctl_cliView()
 {
 	// TODO: add construction code here
 	m_dZoom = 1.;
+	m_nRClick = 0;
+	m_nLClick = 0;
 }
 
 Cshape_ctl_cliView::~Cshape_ctl_cliView()
@@ -79,6 +82,36 @@ void Cshape_ctl_cliView::OnDraw(CDC* pDC)
 		pDoc->m_shapes[i]->GetBoundingBox( ( LONG* )&r );
 		m_shapes[i]->Draw( DVASPECT_CONTENT, 0, 0, 0, pDC->m_hAttribDC, pDC->m_hDC, &r, 0, 0, 0 );
 	};
+
+	CString str;
+	str.Format( _T("left=%i right=%i"), m_nLClick, m_nRClick );
+	pDC->SetBkMode(TRANSPARENT);
+	pDC->ExtTextOut( 0, 0, 0, 0, str, 0 );
+
+	RECT rCli;
+	GetClientRect( &rCli );
+	int uCellSize = 100;
+	for ( LONG i = uCellSize; i < rCli.bottom; i+= uCellSize )
+	{
+		pDC->MoveTo( rCli.left, i );
+		pDC->LineTo( rCli.right, i );
+	};
+	for ( LONG i = uCellSize; i < rCli.right; i+= uCellSize )
+	{
+		pDC->MoveTo( i, rCli.top );
+		pDC->LineTo( i, rCli.bottom );
+	};
+
+	for ( auto& cell : pDoc->m_shapeMap )
+	{
+		int x = cell.first.first*uCellSize;
+		int y = cell.first.second*uCellSize;
+		if ( !PtInRect( &rCli, CPoint( x, y ) ) )
+			continue;
+		str.Format( _T( "%i" ), cell.second.size() );
+		pDC->ExtTextOutW( x, y, 0, 0, str, 0 );
+	};
+
 }
 
 
@@ -151,4 +184,18 @@ void Cshape_ctl_cliView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CRect r;
 	GetClientRect( &r );
 	pDoc->AddShape( r );
+	m_nLClick++;
+}
+
+
+void Cshape_ctl_cliView::OnRButtonDblClk(UINT nFlags, CPoint point)
+{
+	
+	Cshape_ctl_cliDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	CRect r;
+	GetClientRect( &r );
+	pDoc->AddShape( r, &point );
+	m_nRClick++;
+	CView::OnRButtonDblClk(nFlags, point);
 }

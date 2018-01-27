@@ -22,6 +22,7 @@ public:
 // Operations
 public:
 	v_IViewObjectPtr m_shapes;
+	int m_nRClick, m_nLClick;
 
 // Overrides
 public:
@@ -51,6 +52,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDblClk(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // debug version in shape_ctl_cliView.cpp

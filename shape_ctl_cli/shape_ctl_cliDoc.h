@@ -30,7 +30,7 @@ public:
 	ShapeMap m_shapeMap;
 // Operations
 public:
-	void AddShape( const CRect& rCli );
+	void AddShape( const CRect& rCli, const POINT* ppt = 0 );
 
 // Overrides
 public:
